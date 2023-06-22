@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cargar imagen</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h2>Cargar imagen</h2>
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" id="fileInput" name="file" accept="image/*" required>
+    <input type="submit" value="Guardar">
+</form>
+
+<script>
+    $(document).ready(function() {
+      $('#uploadForm').on('submit', function(e) {
+        e.preventDefault();
+
+        var formData = new FormData();
+        formData.append('file', $('#fileInput')[0].files[0]);
+
+        $.ajax({
+          url: '/api/upload',
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function() {
+            alert('Imagen cargada y guardada correctamente.');
+          },
+          error: function() {
+            alert('Error al cargar la imagen.');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
